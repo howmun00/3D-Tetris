@@ -37,7 +37,7 @@ public class CamCtrl : MonoBehaviour
             // X-axis
             Vector3 angles = rotTarget.transform.eulerAngles;
             angles.x += angleY;
-            angles.x = ClampAngle(angles.x, -85f, 85f);
+            angles.x = ClampAngle(angles.x, -70f, 70f);
 
             rotTarget.transform.eulerAngles = angles;
 

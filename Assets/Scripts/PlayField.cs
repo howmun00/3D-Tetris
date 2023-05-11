@@ -14,6 +14,7 @@ public class PlayField : MonoBehaviour
     public GameObject bottomPlane;
     public GameObject N, S, W, E;
 
+    int randomIndex;
     
     public Transform[,,] theGrid;
 
@@ -25,6 +26,7 @@ public class PlayField : MonoBehaviour
     void Start()
     {
         theGrid = new Transform[gridSizeX, gridSizeY, gridSizeZ];
+        CalculatePreview();
         SpawnNewBlock();
     }
 
@@ -64,6 +66,9 @@ public class PlayField : MonoBehaviour
         foreach(Transform child in block.transform)
         {
             Vector3 pos = Round(child.position);
+
+            Debug.Log(pos);
+
             if(pos.y < gridSizeY)
             {
                 theGrid[(int)pos.x, (int)pos.y, (int)pos.z] = child;
@@ -88,7 +93,6 @@ public class PlayField : MonoBehaviour
         Vector3 spawnPoint = new Vector3((int)transform.position.x + (float)gridSizeX/2, 
                                          (int)transform.position.y + gridSizeY,
                                          (int)transform.position.z + (float)gridSizeZ/2);
-        int randomIndex = Random.Range(0, blockList.Length);
 
         //spawning random blocks
         GameObject newBlock = Instantiate(blockList[randomIndex], spawnPoint, Quaternion.identity) as GameObject;
@@ -97,16 +101,24 @@ public class PlayField : MonoBehaviour
         GameObject newGhost = Instantiate(ghostList[randomIndex], spawnPoint, Quaternion.identity) as GameObject;
         newGhost.GetComponent<GhostBlock>().SetParent(newBlock);
 
-        //set inputs
+        CalculatePreview();
+        Previewer.instance.ShowPreview(randomIndex); 
+    }
+
+    public void CalculatePreview()
+    {
+        randomIndex = Random.Range(0, blockList.Length);
     }
 
     public void DeleteLayer()
     {
+        int layersCleared = 0;
         for (int y=gridSizeY-1; y>=0; y--)
         {
             //check full layer
             if(CheckFullLayer(y))
             {
+                layersCleared++;
                 //delete all blocks
                 DeleteLayerAt(y);
 
@@ -114,6 +126,10 @@ public class PlayField : MonoBehaviour
                 MoveAllLayerDown(y);
             }
         }
+        if(layersCleared>0)
+        {
+            GameManager.instance.LayersCleared(layersCleared);
+        } 
     }
 
     bool CheckFullLayer(int y)
@@ -144,7 +160,7 @@ public class PlayField : MonoBehaviour
     }
 
     void MoveAllLayerDown(int y)
-    {
+    {             //y
         for(int i = y; i< gridSizeY; i++)
         {
             MoveOneLayerDown(i);
@@ -153,10 +169,12 @@ public class PlayField : MonoBehaviour
 
     void MoveOneLayerDown(int y)
     {
+        //check for collision
         for(int x = 0; x< gridSizeX; x++)
         {
             for(int z = 0; z< gridSizeZ; z++)
             {
+                Debug.Log(theGrid[x, y ,z]);
                 if(theGrid[x, y, z] !=null)
                 {
                     theGrid[x, y-1, z] = theGrid[x, y, z];
@@ -164,7 +182,7 @@ public class PlayField : MonoBehaviour
                     theGrid[x, y-1, z].position += Vector3.down;
                 }
             }
-        }
+        } 
     }
 
     void OnDrawGizmos()

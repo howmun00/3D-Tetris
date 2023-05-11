@@ -12,6 +12,11 @@ public class TetrisBlock : MonoBehaviour
     void Start ()
     {
         ButtonInputs.instance.SetActiveBlock(gameObject, this);
+        fallTime = GameManager.instance.ReadFallSpeed();
+        if(!CheckValidMove())
+        {
+            GameManager.instance.SetGameIsOver();
+        }
     }
 
     // Update is called once per frame
@@ -28,7 +33,10 @@ public class TetrisBlock : MonoBehaviour
                 PlayField.instance.DeleteLayer();
                 enabled = false;
                 //create a new tetris block
-                PlayField.instance.SpawnNewBlock();
+                if(!GameManager.instance.ReadGameIsOver())
+                {
+                    PlayField.instance.SpawnNewBlock();
+                }
             }
             else
             {
@@ -53,13 +61,12 @@ public class TetrisBlock : MonoBehaviour
         //key for up arrow 
         if(Input.GetKeyDown(KeyCode.UpArrow))
         {
-            SetRotationInput(new Vector3(90, 0, 0));
+            //SetInput(Vector3.forward);
         }
         //key for down arrow 
         if(Input.GetKeyDown(KeyCode.DownArrow))
         {
-            //SetInput(Vector3.back);
-            SetRotationInput(new Vector3(-90, 0, 0));
+            //SetInput(Vector3.down);
         }
     }
     //input for player's movement

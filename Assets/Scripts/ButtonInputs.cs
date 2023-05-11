@@ -7,6 +7,7 @@ public class ButtonInputs : MonoBehaviour
     public static ButtonInputs instance;
 
     public GameObject[] rotateCanvases;
+    public GameObject rotateCanvas;
     public GameObject moveCanvas;
 
     GameObject activeBlock;
@@ -109,10 +110,7 @@ public class ButtonInputs : MonoBehaviour
     void SetInputs()
     {
         moveCanvas.SetActive(moveIsOn);
-        foreach(GameObject c in rotateCanvases)
-        {
-            c.SetActive(!moveIsOn);
-        }
+        rotateCanvas.SetActive(!moveIsOn); 
     }
 
     public void SetHighSpeed()
