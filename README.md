@@ -1,8 +1,8 @@
 # 3D-Tetris
 A 3D Tetris Game made in Unity
 
-# GamePlay Overview #
-
+## GamePlay Overview ##
+https://drive.google.com/file/d/1zIucj291FTozlRdQMVb0I9H_cUzAtq5g/view?usp=share_link
 
 ## Menu Scene ##
 ![menu](https://github.com/howmun00/3D-Tetris/assets/115034398/8e704ea2-04ba-4f05-ba67-d0edf8466541)
@@ -16,22 +16,22 @@ A Menu Scene with Start Button
   - Preview nect block Available with animation
   - Able to pause the game by pressig esc key
 
-## Scoring Mechanism ##
-# Score #
+
+## Score ##
   - clear one layer at a time scored 400
   - clear two layers at a time scored 900
   - clear three layers at a time scored 1400
   - clear four layers at a time scored 2000
   - clear five layers at a time scored 2500
 
-# Level #
+## Level ##
   - Level 1 <= 1000
   - Level 2 1000 <= 2000
   - Level 3 2000 <= 3000
   - Level 4 3000 <= 4000
   - Level 5 4000 <= 5000
 
-# Layers Cleared #
+## Layers Cleared ##
 UI Will show how many layers Player cleared
 
 ## Pause Menu ##
